@@ -1,0 +1,9 @@
+hash: 831e6e14a3d760098d7b36891ba48ac8a1b701e8123054321e3f77a021d2d385
+updated: 2018-08-02T20:22:38.248896+08:00
+imports:
+- name: github.com/paulrosania/go-charset
+  version: 621bb39fcc835dce592e682f5073025d0169587b
+  subpackages:
+  - charset
+  - data
+testImports: []
