@@ -15,13 +15,13 @@ type RSS struct {
 
 //Channel struct for RSS
 type Channel struct {
-	Title         string         `xml:"title" json:"title"`
-	Link          string         `xml:"link" json:"link"`
-	Description   string         `xml:"description" json:"description"`
-	LastBuildDate version.Date   `xml:"lastBuildDate" json:"lastBuildDate"`
-	Language      string         `xml:"language" json:"language"`
-	Image         []Image        `xml:"image" json:"image"`
-	Item          []Item         `xml:"item" json:"item"`
+	Title         		string         `xml:"title" json:"title"`
+	Link          		string         `xml:"link" json:"link"`
+	Description   		string         `xml:"description" json:"description"`
+	LastBuildDate 		version.Date   `xml:"lastBuildDate" json:"lastBuildDate"`
+	Language      		string         `xml:"language" json:"language"`
+	Image         		[]Image        `xml:"image" json:"image"`
+	Item          		[]Item         `xml:"item" json:"item"`
 }
 
 //ItemEnclosure struct for each Item Enclosure
@@ -32,17 +32,17 @@ type ItemEnclosure struct {
 
 //Item struct for each Item in the Channel
 type Item struct {
-	Title       string          `xml:"title" json:"title"`
-	Link        string          `xml:"link" json:"link"`
-	Comments    string          `xml:"comments" json:"comments"`
-	PubDate     version.Date    `xml:"pubDate" json:"pubDate"`
-	GUID        string          `xml:"guid" json:"guid"`
-	Category    []string        `xml:"category" json:"category"`
-	Enclosure   []ItemEnclosure `xml:"enclosure" json:"enclosure"`
-	Description string          `xml:"description" json:"description"`
-	Author 		string          `xml:"author" json:"author"`
-	Content     string          `xml:"content" json:"content"`
-	FullText    string          `xml:"full-text" json:"full-text"`
+	Title       		string          `xml:"title" json:"title"`
+	Link        		string          `xml:"link" json:"link"`
+	Comments    		string          `xml:"comments" json:"comments"`
+	PubDate     		version.Date    `xml:"pubDate" json:"pubDate"`
+	GUID        		string          `xml:"guid" json:"guid"`
+	Category    		[]string        `xml:"category" json:"category"`
+	Enclosure   		[]ItemEnclosure `xml:"enclosure" json:"enclosure"`
+	Description 		string          `xml:"description" json:"description"`
+	Author 				string          `xml:"author" json:"author"`
+	Content     		string          `xml:"content" json:"content"`
+	FullText    		string          `xml:"full-text" json:"full-text"`
 }
 
 type Image struct {

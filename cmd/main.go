@@ -8,33 +8,30 @@ package main
 import (
 	"fmt"
 	"encoding/xml"
+	"github.com/TechCatsLab/rss/version/v1"
 	"github.com/TechCatsLab/rss/client"
-	"github.com/TechCatsLab/rss/version/v2"
 )
 
 var (
-	url = "http://www.geekpark.net/rss"
+	url1 = "https://stackoverflow.com/feeds/"
 )
-
-func main() {
+func main()  {
 	var (
-		rss v2.RSS
+		rss1 v1.Feed
 	)
 
-	resp, err := client.Read(url)
+	resp, err := client.Read(url1)
 	if err != nil {
-		fmt.Printf("Read from %s with error: %v\n", url, err)
+		fmt.Printf("Read from %s with error: %v\n", url1, err)
 		return
 	}
 	defer resp.Close()
 
-
 	decoder := xml.NewDecoder(resp)
-	if err := decoder.Decode(&rss); err != nil {
+	if err := decoder.Decode(&rss1); err != nil {
 		fmt.Printf("Decode XML error: %v\n", err)
 		return
 	}
 
-	fmt.Println(rss)
+	fmt.Println(rss1)
 }
-
