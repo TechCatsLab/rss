@@ -3,7 +3,7 @@
  *      Initial: 2018/08/02    Wang Huajian
  */
 
-package rss
+package client
 
 import (
 	"io"

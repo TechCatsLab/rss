@@ -3,7 +3,7 @@
  *      Initial: 2018/08/07    Wang Huajian
  */
 
-package rss
+package version
 
 import (
 	"time"
@@ -11,6 +11,10 @@ import (
 
 //Date type
 type Date string
+
+const (
+	wordpressDateFormat = "Mon, 02 Jan 2006 15:04:05 -0700"
+)
 
 //Parse (Date function) and returns Time, error
 func (d Date) Parse() (time.Time, error) {
