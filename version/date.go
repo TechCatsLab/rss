@@ -47,4 +47,3 @@ func (d Date) MustFormat(format string) string {
 	}
 	return s
 }
-

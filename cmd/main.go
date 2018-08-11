@@ -10,6 +10,7 @@ import (
 	"encoding/xml"
 	"github.com/TechCatsLab/rss/version/v1"
 	"github.com/TechCatsLab/rss/client"
+	"github.com/TechCatsLab/rss/database"
 )
 
 var (
@@ -32,6 +33,8 @@ func main()  {
 		fmt.Printf("Decode XML error: %v\n", err)
 		return
 	}
+
+    database.InitMysql()
 
 	fmt.Println(rss1)
 }
