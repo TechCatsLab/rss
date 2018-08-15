@@ -10,7 +10,7 @@ import (
 	"encoding/xml"
 	"github.com/TechCatsLab/rss/version/v1"
 	"github.com/TechCatsLab/rss/client"
-	"github.com/TechCatsLab/rss/database"
+	"github.com/TechCatsLab/rss/model"
 )
 
 var (
@@ -34,7 +34,7 @@ func main()  {
 		return
 	}
 
-    database.InitMysql()
+    model.InitMysql()
 
 	fmt.Println(rss1)
 }
