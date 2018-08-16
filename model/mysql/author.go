@@ -45,12 +45,12 @@ var (
 //	defer db.Close()
 //}
 
-func (f *authorServiceProvider) CreateTable() error {
-	_, err := f.store.db.Exec(sqlFeed[sqlFeedTableCreate])
+func (a *authorServiceProvider) CreateTable() error {
+	_, err := a.store.db.Exec(sqlAuthor[sqlAuthorTableCreate])
 
 	return err
 }
 
-func (f *authorServiceProvider) Create(id uint32, title, subtitle string, up string) error {
+func (a *authorServiceProvider) Create(name, uri string) error {
 	return nil
 }

@@ -51,12 +51,13 @@ var (
 //}
 //defer db.Close()
 //}
-func (f *entryServiceProvider) CreateTable() error {
-	_, err := f.store.db.Exec(sqlFeed[sqlFeedTableCreate])
+
+func (e *entryServiceProvider) CreateTable() error {
+	_, err := e.store.db.Exec(sqlEntry[sqlEntryTableCreate])
 
 	return err
 }
 
-func (f *entryServiceProvider) Create(id, title, subtitle string, up string) error {
+func (e *entryServiceProvider) Create(id, title, link, published, updated string) error {
 	return nil
 }
