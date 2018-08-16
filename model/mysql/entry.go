@@ -7,7 +7,7 @@ package mysql
 
 import (
 	"time"
-_ "github.com/go-sql-driver/mysql"
+    _ "github.com/go-sql-driver/mysql"
 )
 
 const (
@@ -31,26 +31,14 @@ type (
 var (
 	sqlEntry = []string {
 	`CREATE TABLE IF NOT EXISTS feed (
-		id   VARCHAR(512) NOT NULL,
+		id   INT UNSIGNED AUTO_INCREMENT,
 		title     VARCHAR(512) NOT NULL,
 		link      VARCHAR(512) NOT NULL,
 		published TIMESTAMP(6),
-		updated   TIMESTAMP(6)
-	 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_bin;`,
+		PRIMARY(id)
+	 )ENGINE=InnoDB AUTO_INCREMENT=1000000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_bin;`,
 	}
 )
-
-//func InitEntryMysql() {
-//db, err := sql.Open("mysql",
-//"root:123456@tcp(127.0.0.1:3306)/rss") //func Open(driverName, dataSourceName string) (*DB, error)
-//
-//_, err = db.Exec(sqlEntry[sqlEntryTableCreate])
-//
-//if err != nil {
-//log.Fatal(err)
-//}
-//defer db.Close()
-//}
 
 func (e *entryServiceProvider) CreateTable() error {
 	_, err := e.store.db.Exec(sqlEntry[sqlEntryTableCreate])
@@ -58,6 +46,10 @@ func (e *entryServiceProvider) CreateTable() error {
 	return err
 }
 
-func (e *entryServiceProvider) Create(id, title, link, published, updated string) error {
+func (e *entryServiceProvider) Create(title, link, published string) error {
+	return nil
+}
+
+func (e *entryServiceProvider) Select() error {
 	return nil
 }

@@ -6,8 +6,8 @@
 package mysql
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"time"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
@@ -39,13 +39,18 @@ var (
 	}
 )
 
-// 给 feedServiceProvider 这个结构挂载 CreateTable 方法并建表
+// create feed table
 func (f *feedServiceProvider) CreateTable() error {
 	_, err := f.store.db.Exec(sqlFeed[sqlFeedTableCreate])
 
 	return err
 }
 
+// insert a raw
 func (f *feedServiceProvider) Create(id uint32, title, subtitle string, up string) error {
+	return nil
+}
+
+func (f *feedServiceProvider) Select() error {
 	return nil
 }

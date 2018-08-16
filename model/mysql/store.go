@@ -9,27 +9,24 @@ import (
 	"database/sql"
 )
 
-// StoreServiceProvider 作用：封装数据库
+// StoreServiceProvider encapsulated database
 type StoreServiceProvider struct {
-	store *store // 为什么类型写 *store, 直接写 store   store  不行吗？
+	store *store
 }
 
-// 操作数据库
+// operate database
 type store struct {
 	db *sql.DB
 
 	feedService *feedServiceProvider
-
 	entryService *entryServiceProvider
-
-	authorService *authorServiceProvider
 }
 
 var (
 	StoreService *StoreServiceProvider
 )
 
-// 初始化 store 或实例化 store
+// Initial store or Instantiated store
 func InitStoreService(db *sql.DB) {
 	s := &store{
 		db: db,
@@ -49,26 +46,17 @@ func InitStoreService(db *sql.DB) {
 		panic(err)
 	}
 
-	s.authorService = &authorServiceProvider{
-		store: s,
-	}
-	if err := s.authorService.CreateTable(); err != nil {
-		panic(err)
-	}
-
 	StoreService = &StoreServiceProvider{
 		store: s,
 	}
 }
 
+// Mount a method(FeedServiceProvider) for StoreServiceProvider struct
 func (s *StoreServiceProvider) FeedServiceProvider() *feedServiceProvider {
 	return s.store.feedService
 }
 
+// same as above
 func (s *StoreServiceProvider) EntryServiceProvider() *entryServiceProvider {
 	return s.store.entryService
-}
-
-func (s *StoreServiceProvider) AuthorServiceProvider() *authorServiceProvider {
-	return s.store.authorService
 }
