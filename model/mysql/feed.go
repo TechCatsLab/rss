@@ -32,14 +32,14 @@ var (
 		`CREATE TABLE IF NOT EXISTS feed (
             feed_id   INTEGER UNSIGNED AUTO_INCREMENT, 
             title     VARCHAR(512) NOT NULL,
-            subtitle  VARCHAR(512) NOT NULL ,
+            subtitle  VARCHAR(512) NOT NULL,
             updated   TIMESTAMP(6),
 			INDEX(title)
          ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_bin;`,
 	}
 )
 
-// 给 feedServiceProvider 这个结构挂载 CreateTable 方法
+// 给 feedServiceProvider 这个结构挂载 CreateTable 方法并建表
 func (f *feedServiceProvider) CreateTable() error {
 	_, err := f.store.db.Exec(sqlFeed[sqlFeedTableCreate])
 

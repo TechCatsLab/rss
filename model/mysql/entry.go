@@ -57,6 +57,6 @@ func (f *entryServiceProvider) CreateTable() error {
 	return err
 }
 
-func (f *entryServiceProvider) Create(id uint32, title, subtitle string, up string) error {
+func (f *entryServiceProvider) Create(id, title, subtitle string, up string) error {
 	return nil
 }
