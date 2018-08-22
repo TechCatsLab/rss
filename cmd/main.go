@@ -6,24 +6,26 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
 	"encoding/xml"
+	"fmt"
 	"github.com/TechCatsLab/rss/version/v1"
 	"github.com/TechCatsLab/rss/client"
-	"github.com/TechCatsLab/rss/model"
+	"github.com/TechCatsLab/rss/model/mysql"
 )
 
 var (
-	url1 = "https://stackoverflow.com/feeds/"
+	urlStackoverflow = "https://stackoverflow.com/feeds/"
 )
+
 func main()  {
 	var (
 		rss1 v1.Feed
 	)
 
-	resp, err := client.Read(url1)
+	resp, err := client.Read(urlStackoverflow)
 	if err != nil {
-		fmt.Printf("Read from %s with error: %v\n", url1, err)
+		fmt.Printf("Read from %s with error: %v\n", urlStackoverflow, err)
 		return
 	}
 	defer resp.Close()
@@ -33,8 +35,17 @@ func main()  {
 		fmt.Printf("Decode XML error: %v\n", err)
 		return
 	}
+	// access database but no connection to the database
+    db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/rss")
+    defer db.Close()
 
-    model.InitMysql()
+    // assignment for StoreService
+	mysql.InitStoreService(db)
 
+	// create feed table
+	mysql.StoreService.FeedServiceProvider().CreateTable()
+
+	// create entry table
+	mysql.StoreService.EntryServiceProvider().CreateTable()
 	fmt.Println(rss1)
 }

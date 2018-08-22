@@ -34,8 +34,9 @@ var (
             title     VARCHAR(512) NOT NULL,
             subtitle  VARCHAR(512) NOT NULL,
             updated   TIMESTAMP(6),
-			INDEX(title)
-         ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_bin;`,
+			INDEX(title),
+            PRIMARY KEY(feed_id)
+         ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`,
 	}
 )
 
