@@ -23,14 +23,8 @@ type Entry struct {
 	Id            string         `xml:"id" json:"id"`
 	Title         string         `xml:"title" json:"title"`
 	Category      string         `xml:"category" json:"category"`
-	Author        []Author       `xml:"author" json:"author"`
 	Link          string         `xml:"link" json:"link"`
 	Published     version.Date   `xml:"published" json:"published"`
 	Updated       version.Date   `xml:"updated" json:"updated"`
 	Summary       string         `xml:"summary" json:"summary"`
-}
-
-type Author struct {
-	Name          string          `xml:"name" json:"name"`
-	Uri           string          `xml:"uri" json:"uri"`
 }

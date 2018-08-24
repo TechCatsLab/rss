@@ -44,8 +44,14 @@ func main()  {
 
 	// create feed table
 	mysql.StoreService.FeedServiceProvider().CreateTable()
+	mysql.StoreService.FeedServiceProvider().Create(rss1.Title, rss1.Subtitle, string(rss1.Updated))
+	mysql.StoreService.FeedServiceProvider().Select()
 
 	// create entry table
 	mysql.StoreService.EntryServiceProvider().CreateTable()
-	fmt.Println(rss1)
+	for _, singleEntry := range rss1.Entry {
+		mysql.StoreService.EntryServiceProvider().Create(singleEntry.Title, singleEntry.Link, string(singleEntry.Published))
+	}
+	mysql.StoreService.EntryServiceProvider().Select()
+	//fmt.Println(rss1)
 }
