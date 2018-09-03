@@ -20,6 +20,9 @@ type store struct {
 
 	feedService *feedServiceProvider
 	entryService *entryServiceProvider
+
+	channelService *channelServiceProvider
+	itemService    *itemServiceProvider
 }
 
 var (
@@ -46,6 +49,20 @@ func InitStoreService(db *sql.DB) {
 		panic(err)
 	}
 
+	s.channelService = &channelServiceProvider{
+		store: s,
+	}
+	if err := s.channelService.CreateTable(); err != nil {
+		panic(err)
+	}
+
+	s.itemService = &itemServiceProvider{
+		store: s,
+	}
+	if err := s.itemService.CrateTable(); err != nil {
+		panic(err)
+	}
+
 	StoreService = &StoreServiceProvider{
 		store: s,
 	}
@@ -59,4 +76,14 @@ func (s *StoreServiceProvider) FeedServiceProvider() *feedServiceProvider {
 // same as above
 func (s *StoreServiceProvider) EntryServiceProvider() *entryServiceProvider {
 	return s.store.entryService
+}
+
+// same as above
+func (s *StoreServiceProvider) ChannelServiceProvider() *channelServiceProvider {
+	return s.store.channelService
+}
+
+// same as above
+func (s *StoreServiceProvider) ItemServiceProvider() *itemServiceProvider {
+	return s.store.itemService
 }

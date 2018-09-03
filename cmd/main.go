@@ -11,32 +11,55 @@ import (
 	"fmt"
 
 	"github.com/TechCatsLab/rss/version/v1"
+	"github.com/TechCatsLab/rss/version/v2"
 	"github.com/TechCatsLab/rss/client"
 	"github.com/TechCatsLab/rss/model/mysql"
 )
 
 var (
-	urlArray = []string{
+	urlArrayVersionOne = []string{
 		"https://stackoverflow.com/feeds/",
 		"http://www.ruanyifeng.com/blog/atom.xml",
+	}
+
+	urlArrayVersionTwo = []string{
+		"http://www.adaymag.com/feed", // 译言
+		"https://pansci.asia/feed", // 科学
+		"https://www.echojs.com/rss", // front
 	}
 )
 
 func main()  {
 	var (
 		rss1 v1.Feed
+		rss2 v2.Channel
 	)
 
-	for _, urlElement := range urlArray {
-		resp, err := client.Read(urlElement)
+	for _, urlElementOne := range urlArrayVersionOne {
+		resp, err := client.Read(urlElementOne)
 		if err != nil {
-			fmt.Printf("Read from %s with error: %v\n", urlElement, err)
+			fmt.Printf("Read from %s with error: %v\n", urlElementOne, err)
 			return
 		}
 		defer resp.Close()
 
 		decoder := xml.NewDecoder(resp)
 		if err := decoder.Decode(&rss1); err != nil {
+			fmt.Printf("Decode XML error: %v\n", err)
+			return
+		}
+	}
+
+	for _, urlElementTwo := range urlArrayVersionTwo {
+		resp, err := client.Read(urlElementTwo)
+		if err != nil {
+			fmt.Printf("Read from %s with error: %v\n", urlElementTwo, err)
+			return
+		}
+		defer resp.Close()
+
+		decoder := xml.NewDecoder(resp)
+		if err := decoder.Decode(&rss2); err != nil {
 			fmt.Printf("Decode XML error: %v\n", err)
 			return
 		}
@@ -65,4 +88,13 @@ func main()  {
 	}
 	mysql.StoreService.EntryServiceProvider().Select()
 	//fmt.Println(rss1)
+
+	// create channel table
+	mysql.StoreService.ChannelServiceProvider().CreateTable()
+	mysql.StoreService.ChannelServiceProvider().Create(rss2.Title, rss2.Description, string(rss2.LastBuildDate))
+	mysql.StoreService.ChannelServiceProvider().Select()
+
+	// crate item table
+	mysql.StoreService.ItemServiceProvider().CrateTable()
+	//mysql.StoreService.ItemServiceProvider().Crate(rss2.Title, rss2.Link, string(rss2.))
 }

@@ -41,7 +41,7 @@ var (
 			INDEX(title),
             PRIMARY KEY(feed_id)
          ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`,
-         "INSERT feed SET title=?,subtitle=?,updated=?",
+         `INSERT INFO feed(title, subtitle, updated) VALUES (?,?,?)`,
 	}
 )
 

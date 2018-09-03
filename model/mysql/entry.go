@@ -19,11 +19,11 @@ const (
 
 type (
 	Entry struct {
-		id          string
-		title       string
-		link        string
-		published   time.Time
-		updated     time.Time
+		Id          string
+		Title       string
+		Link        string
+		Published   time.Time
+		Updated     time.Time
 	}
 
 	entryServiceProvider struct {
@@ -38,10 +38,10 @@ var (
 		id        INT UNSIGNED AUTO_INCREMENT,
 		title     VARCHAR(512) NOT NULL,
 		link      VARCHAR(512) NOT NULL,
-		published TIMESTAMP(6),
+		published VARCHAR(128),
 		PRIMARY KEY(id)
 	 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`,
-	 "INSERT entry SET title=?,link=?,published=?",
+	 `INSERT INFO entry(title, link, published) VALUES (?,?,?)`,
 	}
 )
 
