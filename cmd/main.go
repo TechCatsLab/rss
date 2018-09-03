@@ -9,13 +9,17 @@ import (
 	"database/sql"
 	"encoding/xml"
 	"fmt"
+
 	"github.com/TechCatsLab/rss/version/v1"
 	"github.com/TechCatsLab/rss/client"
 	"github.com/TechCatsLab/rss/model/mysql"
 )
 
 var (
-	urlStackoverflow = "https://stackoverflow.com/feeds/"
+	urlArray = []string{
+		"https://stackoverflow.com/feeds/",
+		"http://www.ruanyifeng.com/blog/atom.xml",
+	}
 )
 
 func main()  {
@@ -23,20 +27,27 @@ func main()  {
 		rss1 v1.Feed
 	)
 
-	resp, err := client.Read(urlStackoverflow)
-	if err != nil {
-		fmt.Printf("Read from %s with error: %v\n", urlStackoverflow, err)
-		return
-	}
-	defer resp.Close()
+	for _, urlElement := range urlArray {
+		resp, err := client.Read(urlElement)
+		if err != nil {
+			fmt.Printf("Read from %s with error: %v\n", urlElement, err)
+			return
+		}
+		defer resp.Close()
 
-	decoder := xml.NewDecoder(resp)
-	if err := decoder.Decode(&rss1); err != nil {
-		fmt.Printf("Decode XML error: %v\n", err)
-		return
+		decoder := xml.NewDecoder(resp)
+		if err := decoder.Decode(&rss1); err != nil {
+			fmt.Printf("Decode XML error: %v\n", err)
+			return
+		}
 	}
+
 	// access database but no connection to the database
     db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/rss")
+    if err != nil {
+    	fmt.Println("open db", err)
+    	return
+	}
     defer db.Close()
 
     // assignment for StoreService

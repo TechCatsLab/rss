@@ -8,6 +8,7 @@ package mysql
 import (
 	"errors"
 	"time"
+
     _ "github.com/go-sql-driver/mysql"
 )
 
