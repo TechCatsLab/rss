@@ -40,14 +40,14 @@ var (
 )
 
 // crate item table
-func (i *itemServiceProvider) CrateTable() error {
+func (i *itemServiceProvider) CreateTable() error {
 	_, err := i.store.db.Exec(sqlItem[sqlItemTableCreate])
 
 	return err
 }
 
 // insert a raw
-func (i *itemServiceProvider) Crate(title, link, pubdate string) error {
+func (i *itemServiceProvider) Create(title, link, pubdate string) error {
 	result, err := i.store.db.Exec(sqlItem[sqlItemTableInsert], title, link, pubdate)
 	if err != nil {
 		return err

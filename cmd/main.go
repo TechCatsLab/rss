@@ -29,7 +29,7 @@ var (
 	}
 )
 
-func main()  {
+func main() {
 	var (
 		rss1 v1.Feed
 		rss2 v2.Channel
@@ -95,6 +95,7 @@ func main()  {
 	mysql.StoreService.ChannelServiceProvider().Select()
 
 	// crate item table
-	mysql.StoreService.ItemServiceProvider().CrateTable()
-	//mysql.StoreService.ItemServiceProvider().Crate(rss2.Title, rss2.Link, string(rss2.))
+	mysql.StoreService.ItemServiceProvider().CreateTable()
+	mysql.StoreService.ItemServiceProvider().Create(rss2.Title, rss2.Link, string(rss2.LastBuildDate))
+	mysql.StoreService.ItemServiceProvider().Select()
 }
