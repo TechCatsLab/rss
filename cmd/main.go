@@ -16,18 +16,28 @@ import (
 	"github.com/TechCatsLab/rss/model/mysql"
 )
 
-var (
-	urlArrayVersionOne = []string{
-		"https://stackoverflow.com/feeds/",
-		"http://www.ruanyifeng.com/blog/atom.xml",
-	}
+type item struct {
+	version int
+	url     []string
+}
 
-	urlArrayVersionTwo = []string{
-		"http://www.adaymag.com/feed", // 译言
-		"https://pansci.asia/feed", // 科学
-		"https://www.echojs.com/rss", // front
-	}
-)
+var gather = []item{
+	item{
+		version:1,
+		url:[]string{
+			"https://stackoverflow.com/feeds/",
+			"http://www.ruanyifeng.com/blog/atom.xml",
+		},
+	},
+	item{
+		version:2,
+		url:[]string{
+			"http://www.adaymag.com/feed", // 译言
+			"https://pansci.asia/feed", // 科学
+			"https://www.echojs.com/rss", // front
+		},
+	},
+}
 
 func main() {
 	var (
@@ -35,33 +45,38 @@ func main() {
 		rss2 v2.Channel
 	)
 
-	for _, urlElementOne := range urlArrayVersionOne {
-		resp, err := client.Read(urlElementOne)
-		if err != nil {
-			fmt.Printf("Read from %s with error: %v\n", urlElementOne, err)
-			return
-		}
-		defer resp.Close()
+	for _, gatherElement := range gather {
+		switch gatherElement.version {
+		case 1:
+			for _, urlElement := range gatherElement.url {
+				resp, err := client.Read(urlElement)
+				if err != nil {
+					fmt.Printf("Read from %s with error: %v\n", urlElement, err)
+					return
+				}
+				defer resp.Close()
 
-		decoder := xml.NewDecoder(resp)
-		if err := decoder.Decode(&rss1); err != nil {
-			fmt.Printf("Decode XML error: %v\n", err)
-			return
-		}
-	}
+				decoder := xml.NewDecoder(resp)
+				if err := decoder.Decode(&rss1); err != nil {
+					fmt.Printf("Decode XML error: %v\n", err)
+					return
+				}
+			}
+		case 2:
+			for _, urlElement := range gatherElement.url {
+				resp, err := client.Read(urlElement)
+				if err != nil {
+					fmt.Printf("Read from %s with error: %v\n", urlElement, err)
+					return
+				}
+				defer resp.Close()
 
-	for _, urlElementTwo := range urlArrayVersionTwo {
-		resp, err := client.Read(urlElementTwo)
-		if err != nil {
-			fmt.Printf("Read from %s with error: %v\n", urlElementTwo, err)
-			return
-		}
-		defer resp.Close()
-
-		decoder := xml.NewDecoder(resp)
-		if err := decoder.Decode(&rss2); err != nil {
-			fmt.Printf("Decode XML error: %v\n", err)
-			return
+				decoder := xml.NewDecoder(resp)
+				if err := decoder.Decode(&rss2); err != nil {
+					fmt.Printf("Decode XML error: %v\n", err)
+					return
+				}
+			}
 		}
 	}
 

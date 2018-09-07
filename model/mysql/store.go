@@ -59,7 +59,7 @@ func InitStoreService(db *sql.DB) {
 	s.itemService = &itemServiceProvider{
 		store: s,
 	}
-	if err := s.itemService.CrateTable(); err != nil {
+	if err := s.itemService.CreateTable(); err != nil {
 		panic(err)
 	}
 
